@@ -1,1 +1,1 @@
-web: gunicorn rf.wsgi --log-file -
+web: gunicorn rf_soa.wsgi --log-file -
