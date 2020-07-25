@@ -26,6 +26,7 @@ SECRET_KEY = 'hg83x#tz45d*9_q04@qdfcr59a5^_oc@6@elehb6l8)@-je=@u'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     'rf-soa.herokuapp.com',
                  ]
 
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'techno.apps.TechnoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
