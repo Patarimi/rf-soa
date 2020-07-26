@@ -117,7 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-django_heroku.settings(locals())
 
 
 # Static files (CSS, JavaScript, Images)
@@ -125,3 +124,5 @@ django_heroku.settings(locals())
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
+
+django_heroku.settings(locals())
