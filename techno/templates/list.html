@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1> List Components Type</h1>
+{% if components_type_list %}
+    <ul>
+    {% for CompType in components_type_list %}
+        <li> <a href="{{ CompType.getabsolute_url }}"> {{ CompType.name }} </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    pouet
+{%endif%}
+{% endblock %}
