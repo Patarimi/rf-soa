@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Key_Perf(models.Model):
     name = models.CharField(max_length=200)
@@ -10,6 +11,8 @@ class Components_Type(models.Model):
     perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('list_compo', args=[str(self.id)])
 
 class Provider(models.Model):
     name = models.CharField(max_length=200)
@@ -32,4 +35,5 @@ class Component(models.Model):
         on_delete=models.CASCADE)
     def __str__(self):
         return self.doi
-    
+    def get_absolute_url(self):
+        return self.doi
