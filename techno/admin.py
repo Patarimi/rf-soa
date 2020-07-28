@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Techno, Provider, Components_Type, Component, Ker_perf
+from .models import Techno, Provider, Components_Type, Component, Key_Perf
 
 admin.site.register(Techno)
 admin.site.register(Provider)
