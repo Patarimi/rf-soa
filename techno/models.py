@@ -1,8 +1,13 @@
 from django.db import models
 
+class Key_Perf(models.Model):
+    name = models.CharField()
+    def __str__(self):
+        return self.name
+
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
-    perf_list = models.CharField(max_length=200)
+    perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
     def __str__(self):
         return self.name
 
