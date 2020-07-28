@@ -1,11 +1,15 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1> List Components Type</h1>
-{% if components_type_list %}
+{% if title %}
+    <h1> List {{title}} </h1>
+{% else %}
+    <h1> List Components Types </h1>
+{% endif %}
+{% if item_list %}
     <ul>
-    {% for CompType in components_type_list %}
-        <li> <a href="{{ CompType.getabsolute_url }}"> {{ CompType.name }} </a></li>
+    {% for item in item_list %}
+        <li> <a href="{{ item.get_absolute_url }}"> {{ item }} </a></li>
     {% endfor %}
     </ul>
 {% else %}
