@@ -8,7 +8,7 @@ class Key_Perf(models.Model):
 
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
-    #perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
+    perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
     def __str__(self):
         return self.name
     def get_absolute_url(self):
