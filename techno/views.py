@@ -9,10 +9,6 @@ def index(request):
         }
     return render(request, "index.html", context)
 
-def explore(request):
-    
-    return render(request, "explore.html")
-
 class ListCompoType(generic.ListView):
     model = Components_Type
     context_object_name = "item_list"
@@ -22,9 +18,10 @@ class ListCompo(generic.ListView):
     model = Component
     context_object_name = "item_list"
     template_name = "list.html"
-    def get_queryset(self):
-        return Component.objects.all()
+    def get_queryset(self, **kwargs):
+        return Component.objects.filter(comp_type_id = self.kwargs['pk'])
     def get_context_data(self, **kwargs):
+        pk = self.kwargs['pk']
         context = super(ListCompo, self).get_context_data(**kwargs)
-        context["title"] = Components_Type.objects.all()[0]
+        context["title"] = Components_Type.objects.get(pk=pk)
         return context
