@@ -39,7 +39,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
-                ('perf_list', models.ManyToManyField(help_text='select key performances of this component type', to='techno.Key_Perf')),
             ],
         ),
         migrations.CreateModel(
