@@ -33,6 +33,9 @@ class Component(models.Model):
     comp_type = models.ForeignKey(
         Components_Type,
         on_delete=models.CASCADE)
+    techno = models.ForeignKey(
+        Techno,
+        on_delete=models.CASCADE)
     def __str__(self):
         return self.doi
     def get_absolute_url(self):
