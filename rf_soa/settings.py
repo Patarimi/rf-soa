@@ -127,4 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
+#logging
+DEBUG_PROPAGATE_EXCEPTIONS=True
+
 django_heroku.settings(locals())
