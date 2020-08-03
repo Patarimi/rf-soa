@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2> Summary of {{component.doi}} </h2>
+
+<ul>
+    <li>component type: {{component.como_type}} </li>
+    <li>technology name:  {{component.techno}}</li>
+</ul>
+
+<a href="{{component.doi}}"> publication (external link) </a>
+{% endblock %}

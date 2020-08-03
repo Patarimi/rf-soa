@@ -39,4 +39,4 @@ class Component(models.Model):
     def __str__(self):
         return self.doi
     def get_absolute_url(self):
-        return self.doi
+        return reverse('compo', args=[str(self.id)])
