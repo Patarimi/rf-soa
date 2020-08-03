@@ -25,3 +25,7 @@ class ListCompo(generic.ListView):
         context = super(ListCompo, self).get_context_data(**kwargs)
         context["title"] = Components_Type.objects.get(pk=pk)
         return context
+
+class Compo(generic.DetailView):
+    model = Component
+    template_name = 'component_detail.html'
