@@ -5,22 +5,32 @@ from django.urls import reverse
 class KeyPerfField(models.Field):
     description = "list of key performances of a component"
     
-    def __init__(self, comp_type_id, *args, **kwargs):
-        _comp_type = Components_Type.objects.select_related('perf_list').get(id=comp_type_id)
-        self.key_perf_list = _comp_type.perf_list
+    def __init__(self, *args, **kwargs):
+        try:
+            if kwargs['comp_type_id'] > 0:
+                _comp_type = Components_Type.objects.select_related('perf_list').get(id=kwargs['comp_type_id'])
+                self.key_perf_list = _comp_type.perf_list
+            del kwargs['comp_type_id']
+        except KeyError:
+            pass
         super(KeyPerfField, self).__init__(*args, **kwargs)
 
     def __create_dict(self, value_str):
-        table = re.split(' ', value_str)
+        table = re.split("[{},]", value_str)
         dic = dict()
         for pair_str in table:
-            pair = re.split(':', pair_str)
-            dic[pair[0]] = int(pair[1])
+            if pair_str != '':
+                pair = re.split(':', pair_str.strip(" '\""))
+                fl = float(pair[1])
+                dic[pair[0].strip(" '\"")] = fl
         return dic
 
     def deconstruct(self):
         name, path, args, kwargs = super(KeyPerfField, self).deconstruct()
-        #del kwargs['max_length']
+        try:
+            del kwargs['comp_type_id']
+        except KeyError:
+            pass
         return name, path, args, kwargs
     
     def db_type(self, connection):
@@ -39,10 +49,10 @@ class KeyPerfField(models.Field):
         return self.__create_dict(value)
 
     def get_prep_value(self, value_dic):
-        out_str = ""
+        out_str = "{"
         for key in value_dic:
-            out_str += key+':'+str(value_dic[key])+" "
-        return out_str
+            out_str += f"'{key}': {value_dic[key]},"
+        return out_str.strip(',')+"}"
 
     def db_internal_type(self):
         return 'CharField'
@@ -56,7 +66,7 @@ class Components_Type(models.Model):
     name = models.CharField(max_length=200)
     perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
     def __str__(self):
-        return self.name+f' <{self.id}>'
+        return f'<{self.id}> '+self.name
     def get_absolute_url(self):
         return reverse('list_compo', args=[str(self.id)])
 
@@ -67,29 +77,24 @@ class Provider(models.Model):
 
 class Techno(models.Model):
     name = models.CharField(max_length=200)
-    provider = models.ForeignKey(
-        Provider,
-        on_delete=models.CASCADE,
-        default=0)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, default=0)
     def __str__(self):
         return self.name
 
-"""class ComponentManager(models.Manager):
+class ComponentManager(models.Manager):
     def create_component(self, compo_type_id):
         return self.create(compo_type_id)
-"""
+
 class Component(models.Model):
     doi = models.URLField(max_length=200)
     comp_type_id = models.IntegerField()
-    key_perf = KeyPerfField(comp_type_id)
-    techno = models.ForeignKey(
-        Techno,
-        on_delete=models.CASCADE)
-    """objects = ComponentManager()
+    key_perf = KeyPerfField(comp_type_id=0)
+    techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
+    objects = ComponentManager()
     @classmethod
     def create(cls, comp_type_id):
-        Comp = cls()
-        key_perf = KeyPerfField(comp_type_id)"""
+        Comp = cls(comp_type_id=comp_type_id)
+        Comp.key_perf = KeyPerfField(comp_type_id)
     def __str__(self):
         return self.doi
     def get_absolute_url(self):
