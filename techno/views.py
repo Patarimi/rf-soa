@@ -29,3 +29,8 @@ class ListCompo(generic.ListView):
 class Compo(generic.DetailView):
     model = Component
     template_name = 'component_detail.html'
+
+class CompoCreate(generic.CreateView):
+    model = Component
+    field = ['doi', 'techno']
+    template_name = "newcompo.html"
