@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='component',
             name='key_perf',
-            field=techno.models.KeyPerfField(default='area:0 fc:10e9'),
+            field=techno.models.KeyPerfField(default={'area': 5.0, 'fc': 10000000000.0}),
             preserve_default=False,
         ),
     ]
