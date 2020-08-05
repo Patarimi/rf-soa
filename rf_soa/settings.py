@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'rf_soa.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'HOST': 'ec2-54-228-250-82.eu-west-1.compute.amazonaws.com',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd9sjcp4gfaghvk',
+        'PORT': '5432',
+        'PASSWORD': os.environ['DB_PW'],
+        'USER': 'ejqpfisogvxqap'
     }
 }
 
