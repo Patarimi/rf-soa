@@ -1,4 +1,4 @@
-import re
+from django.contrib.postgres.fields import HStoreField
 from django.db import models
 from django.urls import reverse
 
@@ -87,14 +87,9 @@ class ComponentManager(models.Manager):
 
 class Component(models.Model):
     doi = models.URLField(max_length=200)
-    comp_type_id = models.IntegerField()
-    key_perf = KeyPerfField(comp_type_id=0)
+    comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE)
+    key_perf = HStoreField()
     techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
-    objects = ComponentManager()
-    @classmethod
-    def create(cls, comp_type_id):
-        Comp = cls(comp_type_id=comp_type_id)
-        Comp.key_perf = KeyPerfField(comp_type_id)
     def __str__(self):
         return self.doi
     def get_absolute_url(self):

@@ -5,14 +5,13 @@
 
 <ul>
     <li>component type: {{component.comp_type_id}} </li>
-    <li>technology name: {{component.techno}} </li>
-    <li>performances:
-        <ul>
-        {% for key, value in component.key_perf.items %}
-            <li>{{key}}: {{value}} </li>
-        {% endfor %}
-        </ul>
-    </li>
+    <li>technology name:  {{component.techno}}</li>
+    <li> performances: {{key_perf}}
+    <ul>
+    {% for key, value in key_perf.items %}
+        <li> {{key}}: {{value}} </li>
+    {% endfor %}
+    </ul>
     <li><a href="{{component.doi}}"> publication (external link) </a></li>
 </ul>
 {% endblock %}

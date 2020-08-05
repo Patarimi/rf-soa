@@ -22,13 +22,19 @@ class ListCompo(generic.ListView):
         return Component.objects.filter(comp_type_id = self.kwargs['pk'])
     def get_context_data(self, **kwargs):
         pk = self.kwargs['pk']
-        context = super(ListCompo, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["title"] = Components_Type.objects.get(pk=pk)
         return context
 
 class Compo(generic.DetailView):
     model = Component
     template_name = 'component_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        Comp = Component.objects.get(pk=self.kwargs['pk'])
+        context["key_perf"] = Comp.key_perf
+        return context
 
 class CompoCreate(generic.CreateView):
     model = Component
