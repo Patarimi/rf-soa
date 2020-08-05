@@ -32,5 +32,12 @@ class Compo(generic.DetailView):
 
 class CompoCreate(generic.CreateView):
     model = Component
-    field = ['doi', 'techno']
+    fields = ['doi',
+             'techno',
+             'key_perf',
+             ]
     template_name = "newcompo.html"
+    def form_valid(self, form):
+        Comp_Type = Components_Type.objects.get(pk=self.kwargs['type_id'])
+        form.instance.comp_type_id = Comp_Type
+        return super().form_valid(form)
