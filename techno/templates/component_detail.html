@@ -8,8 +8,8 @@
     <li>technology name:  {{component.techno}}</li>
     <li> performances: {{key_perf}}
     <ul>
-    {% for key, value in key_perf.items %}
-        <li> {{key}}: {{value}} </li>
+    {% for value in key_perf %}
+        <li> {{value}}: 0 </li>
     {% endfor %}
     </ul>
     <li><a href="{{component.doi}}"> publication (external link) </a></li>
