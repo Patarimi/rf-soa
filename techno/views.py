@@ -33,7 +33,8 @@ class Compo(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         Comp = Component.objects.get(pk=self.kwargs['pk'])
-        context["key_perf"] = Comp.key_perf
+        key_perf = eval(Comp.key_perf)
+        context["key_perf"] = key_perf
         return context
 
 class CompoCreate(generic.CreateView):

@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='component',
             name='key_perf',
-            field=django.contrib.postgres.fields.hstore.HStoreField(default="{'area': 0}"),
+            field=django.contrib.postgres.fields.hstore.HStoreField(default=""),
             preserve_default=False,
         ),
     ]
