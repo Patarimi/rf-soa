@@ -8,7 +8,7 @@
     <li>technology name:  {{component.techno}}</li>
     <li> performances:
     <ul>
-    {% for key, value in key_perf.items %}
+    {% for key, value in component.key_perf.items %}
         <li> {{key}}: {{value}} </li>
     {% endfor %}
     </ul>
