@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import HStoreField
 from django.db import models
 from django.urls import reverse
 
@@ -30,12 +31,9 @@ class Techno(models.Model):
 
 class Component(models.Model):
     doi = models.URLField(max_length=200)
-    comp_type = models.ForeignKey(
-        Components_Type,
-        on_delete=models.CASCADE)
-    techno = models.ForeignKey(
-        Techno,
-        on_delete=models.CASCADE)
+    comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE)
+    key_perf = HStoreField()
+    techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
     def __str__(self):
         return self.doi
     def get_absolute_url(self):

@@ -4,9 +4,14 @@
 <h2> Summary of {{component.doi}} </h2>
 
 <ul>
-    <li>component type: {{component.como_type}} </li>
+    <li>component type: {{component.comp_type_id}} </li>
     <li>technology name:  {{component.techno}}</li>
+    <li> performances: {{key_perf}}
+    <ul>
+    {% for key, value in key_perf.items %}
+        <li> {{key}}: {{value}} </li>
+    {% endfor %}
+    </ul>
+    <li><a href="{{component.doi}}"> publication (external link) </a></li>
 </ul>
-
-<a href="{{component.doi}}"> publication (external link) </a>
 {% endblock %}
