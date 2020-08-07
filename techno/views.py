@@ -4,7 +4,6 @@ from techno.models import Components_Type, Component, Key_Perf
 from .forms import GraphFrom
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.models import HoverTool
 
 def index(request):
     context = {
@@ -61,6 +60,7 @@ def graph(request):
             title = comp_type.name,
             x_axis_label=x_axis.name,
             y_axis_label=y_axis.name,
+            x_axis_type="log",
             )
         data_set = Component.objects.filter(comp_type_id = type_id).values_list('key_perf')
         x_value, y_value = [], []
@@ -72,13 +72,13 @@ def graph(request):
                 y_value.append(float(y))
             except KeyError:
                 pass
-        plot.circle(x_value, y_value, size=20, color="blue")
+        plot.circle(x_value, y_value, size=5, color="blue")
         script, div = components(plot)
         context = {
                    'script': script,
                    'div': div
                    }
     else:
-        form = GraphFrom(type_id='1')
+        form = GraphFrom(initial={'x_axis':3, 'y_axis':2}, type_id='1')
     context['form'] = form
     return render(request, "graph.html", context)
