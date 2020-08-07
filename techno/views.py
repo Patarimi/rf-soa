@@ -45,6 +45,13 @@ class CompoCreate(generic.CreateView):
         form.instance.comp_type_id = comp_type
         return super().form_valid(form)
 
+def axis_type(axis_name, request):
+    try:
+        request.POST[axis_name]
+        return "log"
+    except:
+        return "linear"
+
 def graph(request):
     context = {}
     if request.method == 'POST':
@@ -60,7 +67,8 @@ def graph(request):
             title = comp_type.name,
             x_axis_label=x_axis.name,
             y_axis_label=y_axis.name,
-            x_axis_type="log",
+            x_axis_type=axis_type('x_log_scale', request),
+            y_axis_type=axis_type('y_log_scale', request),
             )
         data_set = Component.objects.filter(comp_type_id = type_id).values_list('key_perf')
         x_value, y_value = [], []
