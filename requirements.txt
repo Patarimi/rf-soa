@@ -1,3 +1,4 @@
+bokeh
 django
 gunicorn
 django-heroku

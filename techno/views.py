@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.views import generic
-from techno.models import Components_Type, Component
+from techno.models import Components_Type, Component, Key_Perf
+from .forms import GraphFrom
+from bokeh.plotting import figure
+from bokeh.embed import components
+from bokeh.models import HoverTool
 
 def index(request):
     context = {
@@ -34,3 +38,44 @@ class CompoCreate(generic.CreateView):
     model = Component
     field = ['doi', 'techno']
     template_name = "newcompo.html"
+    def form_valid(self, form):
+        comp_type = Components_Type.objects.get(pk=self.kwargs['type_id'])
+        form.instance.comp_type_id = comp_type
+        return super().form_valid(form)
+
+def graph(request):
+    context = {}
+    if request.method == 'POST':
+        #form parts
+        type_id = request.POST["comptype"]
+        y_axis = Key_Perf.objects.filter(components_type = type_id).get(pk=request.POST['y_axis'])
+        x_axis = Key_Perf.objects.filter(components_type = type_id).get(pk=request.POST['x_axis'])
+        form = GraphFrom(request.POST, type_id=type_id)
+        
+        #plotting parts
+        comp_type = Components_Type.objects.get(pk=type_id)
+        plot = figure(
+            title = comp_type.name,
+            x_axis_label=x_axis.name,
+            y_axis_label=y_axis.name,
+            )
+        data_set = Component.objects.filter(comp_type_id = type_id).values_list('key_perf')
+        x_value, y_value = [], []
+        for data, *_ in data_set:
+            print(data)
+            try:
+                x, y = data[x_axis.name], data[y_axis.name]
+                x_value.append(float(x))
+                y_value.append(float(y))
+            except KeyError:
+                pass
+        plot.circle(x_value, y_value, size=20, color="blue")
+        script, div = components(plot)
+        context = {
+                   'script': script,
+                   'div': div
+                   }
+    else:
+        form = GraphFrom(type_id='1')
+    context['form'] = form
+    return render(request, "graph.html", context)
