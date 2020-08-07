@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{%block title%}
+<title> Graph Test </title>
+{%endblock%}
+
+
+{% block content %}
+<h2> Graphics </h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit" />
+</form>
+
+{{div | safe}}
+{% endblock %}
+
+{%block script%}
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.1.1.min.js"></script>
+{{script | safe}}
+{% endblock %}
