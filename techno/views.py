@@ -49,7 +49,7 @@ def axis_type(axis_name, request):
     try:
         request.POST[axis_name]
         return "log"
-    except:
+    except KeyError:
         return "linear"
 
 def graph(request):
@@ -73,7 +73,6 @@ def graph(request):
         data_set = Component.objects.filter(comp_type_id = type_id).values_list('key_perf')
         x_value, y_value = [], []
         for data, *_ in data_set:
-            print(data)
             try:
                 x, y = data[x_axis.name], data[y_axis.name]
                 x_value.append(float(x))
