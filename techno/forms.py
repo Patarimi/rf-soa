@@ -1,5 +1,5 @@
 from django import forms
-from .models import Components_Type, Key_Perf
+from .models import Components_Type, Key_Param
 
 class GraphFrom(forms.Form):
     choices = Components_Type.objects.all().values_list()
@@ -13,6 +13,6 @@ class GraphFrom(forms.Form):
         self.type_id = kwargs.pop('type_id')
         super().__init__(*args, **kwargs)
         
-        choices = Key_Perf.objects.filter(components_type = self.type_id)
-        self.fields['y_axis'] = forms.ChoiceField(choices=choices.values_list())
-        self.fields['x_axis'] = forms.ChoiceField(choices=choices.values_list())
+        choices = Key_Param.objects.all().values_list('pk', 'name_text')
+        self.fields['y_axis'] = forms.ChoiceField(choices=choices)
+        self.fields['x_axis'] = forms.ChoiceField(choices=choices)
