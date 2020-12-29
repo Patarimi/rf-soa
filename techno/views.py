@@ -21,6 +21,9 @@ class ListCompo(generic.ListView):
     model = Component
     context_object_name = "item_list"
     template_name = "list.html"
+    
+    def get_queryset(self, **kwargs):
+        return Component.objects.filter(comp_type_id= self.kwargs['pk'])
 
 class Compo(generic.DetailView):
     model = Component
