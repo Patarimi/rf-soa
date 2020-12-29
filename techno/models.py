@@ -20,9 +20,16 @@ class Provider(models.Model):
     def __str__(self):
         return self.name
 
+class Technos_Type(models.Model):
+    name_text = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name_text
+
 class Techno(models.Model):
     name = models.CharField(max_length=200)
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, default=0)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, default=1)
+    node_length = models.IntegerField(default=0)
+    techno_type = models.ForeignKey(Technos_Type, on_delete=models.CASCADE, default=1)
     def __str__(self):
         return self.name
 
@@ -37,8 +44,8 @@ class Component(models.Model):
         return reverse('compo', args=[str(self.id)])
 
 class Key_Perf(models.Model):
-    component = models.ForeignKey(Component, on_delete=models.CASCADE, null=True)
-    key_param = models.ForeignKey(Key_Param, on_delete=models.CASCADE, null=True)
+    component = models.ForeignKey(Component, on_delete=models.CASCADE, default=1)
+    key_param = models.ForeignKey(Key_Param, on_delete=models.CASCADE, default=1)
     value = models.FloatField(default=0)
     def __str__(self):
         if (self.key_param.units == '%'):
