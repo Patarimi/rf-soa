@@ -88,7 +88,10 @@ DATABASES = {
         'NAME': 'd9sjcp4gfaghvk',
         'PORT': '5432',
         'PASSWORD': os.environ['DB_PW'],
-        'USER': 'ejqpfisogvxqap'
+        'USER': 'ejqpfisogvxqap',
+        'TEST':{
+            'NAME': 'd9sjcp4gfaghvk',
+        }
     }
 }
 
