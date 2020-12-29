@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from techno.models import Components_Type, Component, Key_Perf
+from techno.models import Components_Type, Component, Key_Param, Key_Perf
 from .forms import GraphFrom
 from bokeh.plotting import figure
 from bokeh.embed import components
@@ -21,13 +21,6 @@ class ListCompo(generic.ListView):
     model = Component
     context_object_name = "item_list"
     template_name = "list.html"
-    def get_queryset(self, **kwargs):
-        return Component.objects.filter(comp_type_id = self.kwargs['pk'])
-    def get_context_data(self, **kwargs):
-        pk = self.kwargs['pk']
-        context = super().get_context_data(**kwargs)
-        context["title"] = Components_Type.objects.get(pk=pk)
-        return context
 
 class Compo(generic.DetailView):
     model = Component
@@ -57,24 +50,29 @@ def graph(request):
     if request.method == 'POST':
         #form parts
         type_id = request.POST["comptype"]
-        y_axis = Key_Perf.objects.filter(components_type = type_id).get(pk=request.POST['y_axis'])
-        x_axis = Key_Perf.objects.filter(components_type = type_id).get(pk=request.POST['x_axis'])
+        x_id = request.POST['x_axis']
+        y_id = request.POST['y_axis']
+        key_param_q = Key_Param.objects
+        x_axis = key_param_q.get(pk=x_id)
+        y_axis = key_param_q.get(pk=y_id)
         form = GraphFrom(request.POST, type_id=type_id)
         
         #plotting parts
         comp_type = Components_Type.objects.get(pk=type_id)
         plot = figure(
             title = comp_type.name,
-            x_axis_label=x_axis.name,
-            y_axis_label=y_axis.name,
+            x_axis_label=f"{x_axis.name_text} ({x_axis.units})",
+            y_axis_label=f"{y_axis.name_text} ({y_axis.units})",
             x_axis_type=axis_type('x_log_scale', request),
             y_axis_type=axis_type('y_log_scale', request),
             )
-        data_set = Component.objects.filter(comp_type_id = type_id).values_list('key_perf')
+        data_id = Component.objects.filter(comp_type_id=type_id, perf_record=x_id).values_list('pk')
+        data_set = Key_Perf.objects.filter(key_param__in=[x_id, y_id])
         x_value, y_value = [], []
-        for data, *_ in data_set:
+        for data in data_id:
             try:
-                x, y = data[x_axis.name], data[y_axis.name]
+                x = data_set.get(component_id=data, key_param_id=x_id).value
+                y = data_set.get(component_id=data, key_param_id=y_id).value
                 x_value.append(float(x))
                 y_value.append(float(y))
             except KeyError:

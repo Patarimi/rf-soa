@@ -1,15 +1,15 @@
-from django.contrib.postgres.fields import HStoreField
 from django.db import models
 from django.urls import reverse
 
-class Key_Perf(models.Model):
-    name = models.CharField(max_length=200)
+class Key_Param(models.Model):
+    UnitsPool = models.TextChoices('UnitsPool', 'Hz W %')
+    name_text = models.CharField(max_length=200)
+    units = models.CharField(blank=True, choices= UnitsPool.choices, max_length=10)
     def __str__(self):
-        return self.name
-
+        return self.name_text
+    
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
-    perf_list = models.ManyToManyField(Key_Perf, help_text="select key performances of this component type")
     def __str__(self):
         return f'<{self.id}> '+self.name
     def get_absolute_url(self):
@@ -26,16 +26,23 @@ class Techno(models.Model):
     def __str__(self):
         return self.name
 
-class ComponentManager(models.Manager):
-    def create_component(self, compo_type_id):
-        return self.create(compo_type_id)
-
 class Component(models.Model):
     doi = models.URLField(max_length=200)
     comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE)
-    key_perf = HStoreField()
+    perf_record = models.ManyToManyField(Key_Param, through='Key_Perf')
     techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
     def __str__(self):
-        return self.doi
+        return self.doi.split('/')[-1]
     def get_absolute_url(self):
         return reverse('compo', args=[str(self.id)])
+
+class Key_Perf(models.Model):
+    component = models.ForeignKey(Component, on_delete=models.CASCADE, null=True)
+    key_param = models.ForeignKey(Key_Param, on_delete=models.CASCADE, null=True)
+    value = models.FloatField(default=0)
+    def __str__(self):
+        if (self.key_param.units == '%'):
+            form = '2.2f'
+        else:
+            form = '3.2e'
+        return f'{self.key_param}: {self.value : {form}}{self.key_param.units}'
