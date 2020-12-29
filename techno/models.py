@@ -11,7 +11,7 @@ class Key_Param(models.Model):
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
-        return f'<{self.id}> '+self.name
+        return self.name
     def get_absolute_url(self):
         return reverse('list_compo', args=[str(self.id)])
 
