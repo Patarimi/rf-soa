@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import HStoreField
 from django.db import models
 from django.urls import reverse
 
