@@ -53,3 +53,7 @@ class Key_Perf(models.Model):
         else:
             form = '3.2e'
         return f'{self.key_param}: {self.value : {form}}{self.key_param.units}'
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['component', 'key_param'], name='perf_record'),
+        ]
