@@ -89,8 +89,16 @@ DATABASES = {
         'PORT': '5432',
         'PASSWORD': os.environ['DB_PW'],
         'USER': 'ejqpfisogvxqap',
+    },
+    'postgres': {
+        'HOST': 'ec2-52-30-161-203.eu-west-1.compute.amazonaws.com',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dd7ah774gfaa1b',
+        'PORT': '5432',
+        'PASSWORD': os.environ['DB_PW_TEST'],
+        'USER': 'jmijpsshtfhyuz',
         'TEST':{
-            'NAME': 'd9sjcp4gfaghvk',
+            'NAME':'dd7ah774gfaa1b'
         }
     }
 }
