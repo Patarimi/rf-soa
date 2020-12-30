@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
+import os, sys
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -80,29 +80,31 @@ WSGI_APPLICATION = 'rf_soa.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'HOST': 'ec2-54-228-250-82.eu-west-1.compute.amazonaws.com',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd9sjcp4gfaghvk',
-        'PORT': '5432',
-        'PASSWORD': os.environ['DB_PW'],
-        'USER': 'ejqpfisogvxqap',
-    },
-    'postgres': {
-        'HOST': 'ec2-52-30-161-203.eu-west-1.compute.amazonaws.com',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dd7ah774gfaa1b',
-        'PORT': '5432',
-        'PASSWORD': os.environ['DB_PW_TEST'],
-        'USER': 'jmijpsshtfhyuz',
-        'TEST':{
-            'NAME':'dd7ah774gfaa1b'
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'HOST': 'ec2-52-30-161-203.eu-west-1.compute.amazonaws.com',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'dd7ah774gfaa1b',
+            'PORT': '5432',
+            'PASSWORD': os.environ['DB_PW_TEST'],
+            'USER': 'jmijpsshtfhyuz',
+            'TEST':{
+                'NAME':'dd7ah774gfaa1b'
+            }
         }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'HOST': 'ec2-54-228-250-82.eu-west-1.compute.amazonaws.com',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'd9sjcp4gfaghvk',
+            'PORT': '5432',
+            'PASSWORD': os.environ['DB_PW'],
+            'USER': 'ejqpfisogvxqap',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
