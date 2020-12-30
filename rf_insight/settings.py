@@ -37,6 +37,8 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'techno.apps.TechnoConfig',
+    'rf_design.apps.RfConfig',
+    'rf_insight.apps.Rf_InsightConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
