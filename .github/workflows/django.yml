@@ -2,9 +2,10 @@ name: Django CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, ]
   pull_request:
     branches: [ master ]
+  
 
 jobs:
   build:
@@ -22,7 +23,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-#wheel use to install bokeh, PyYAML and psycog2
+        #wheel use to install bokeh, PyYAML and psycog2
         pip install coveralls wheel
         pip install -r requirements.txt
     - name: Run Tests
