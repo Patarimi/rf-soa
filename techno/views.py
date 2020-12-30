@@ -10,18 +10,25 @@ def index(request):
         "compo_num": Component.objects.all().count(),
         "compo_type_num": Components_Type.objects.all().count(),
         }
-    return render(request, "index.html", context)
+    return render(request, "techno/index.html", context)
 
 class ListCompoType(generic.ListView):
     model = Components_Type
     context_object_name = "item_list"
     template_name = "techno/list.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Component Type'
+        return context
 
 class ListCompo(generic.ListView):
     model = Component
     context_object_name = "item_list"
     template_name = "techno/list.html"
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Components_Type.objects.get(id = self.kwargs['pk'])
+        return context
     def get_queryset(self, **kwargs):
         return Component.objects.filter(comp_type_id= self.kwargs['pk'])
 

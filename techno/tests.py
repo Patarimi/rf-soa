@@ -5,9 +5,11 @@ from .views import graph
 from .models import Component, Components_Type, Techno, Technos_Type, Provider
 
 class ViewsTest(TestCase):
-    def test_path(self):
-        response = self.client.get(reverse('techno:graph'))
-        self.assertEqual(response.status_code, 200)
+    def test_techno_path(self):
+        techno_path_list = ('graph', 'index', 'explore')
+        for path in techno_path_list:
+            resp = self.client.get(reverse(f'techno:{path}'))
+            self.assertEqual(resp.status_code, 200)       
 
 class ModelTest(TestCase):
     def test_components_type(self):
@@ -15,7 +17,6 @@ class ModelTest(TestCase):
         compo_type.save()
         resp = self.client.get(compo_type.get_absolute_url())
         self.assertEqual(resp.status_code, 200) 
-
     def test_component(self):
         compo_type = Components_Type(name='foo', pk=1)
         compo_type.save()

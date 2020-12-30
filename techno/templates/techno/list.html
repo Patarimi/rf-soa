@@ -2,9 +2,9 @@
 
 {% block content %}
 {% if title %}
-    <h1> List {{title}} </h1>
+    <h1> List of {{title}} </h1>
 {% else %}
-    <h1> List Components Types </h1>
+    <h1> Missing Title </h1>
 {% endif %}
 {% if item_list %}
     <ul>
@@ -13,6 +13,6 @@
     {% endfor %}
     </ul>
 {% else %}
-    pouet
+    No item found.
 {%endif%}
 {% endblock %}
