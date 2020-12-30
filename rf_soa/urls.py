@@ -19,6 +19,6 @@ from techno.views import index
 
 urlpatterns = [
     path('', index, name='index'),
-    path('techno/', include('techno.urls')),
+    path('techno/', include('techno.urls'), name='techno'),
     path('admin/', admin.site.urls),
 ]

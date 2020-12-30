@@ -11,7 +11,7 @@ class Key_Param(models.Model):
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
-        return f'<{self.id}> '+self.name
+        return self.name
     def get_absolute_url(self):
         return reverse('list_compo', args=[str(self.id)])
 
@@ -53,3 +53,7 @@ class Key_Perf(models.Model):
         else:
             form = '3.2e'
         return f'{self.key_param}: {self.value : {form}}{self.key_param.units}'
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['component', 'key_param'], name='perf_record'),
+        ]

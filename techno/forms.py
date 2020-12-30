@@ -1,13 +1,18 @@
 from django import forms
+from django.db.utils import ProgrammingError
+
 from .models import Components_Type, Key_Param
 
 class GraphFrom(forms.Form):
-    choices = Components_Type.objects.all().values_list()
-    comptype = forms.ChoiceField(choices=choices)
-    x_axis = forms.ChoiceField()
-    x_log_scale = forms.BooleanField(required=False)
-    y_axis = forms.ChoiceField()
-    y_log_scale = forms.BooleanField(required=False)
+    try:
+        choices = Components_Type.objects.all()
+        comptype = forms.ChoiceField(choices=choices.values_list())
+        x_axis = forms.ChoiceField()
+        x_log_scale = forms.BooleanField(required=False)
+        y_axis = forms.ChoiceField()
+        y_log_scale = forms.BooleanField(required=False)
+    except ProgrammingError:
+        pass
     
     def __init__(self, *args, **kwargs):
         self.type_id = kwargs.pop('type_id')
