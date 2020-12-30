@@ -15,8 +15,10 @@
           {% block sidebar %}
            <ul class="sidebar-nav">
                <li><a href="{% url 'index' %}">Home</a></li>
-               <li><a href="{% url 'techno:explore' %}">Explore</a></li>
-               <li><a href="{% url 'techno:graph' %}">Graph</a></li>
+               <li><a href="{% url 'rf:index' %}">RF Design Helper Web</a></li>
+               <li><a href="{% url 'techno:index' %}">SoA Explorer</a></li>
+               <ul><li><a href="{% url 'techno:explore' %}">Explore</a></li></ul>
+               <ul><li><a href="{% url 'techno:graph' %}">Graph</a></li></ul>
                <li><a href="/admin">Admin</a></li>
                <li><a href="">About</a></li>
            </ul>
