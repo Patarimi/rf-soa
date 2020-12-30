@@ -1,6 +1,5 @@
 import os
-from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.shortcuts import render
 import passive_auto_design.components.coupler as cpl
 import passive_auto_design.substrate as sub
 
@@ -28,7 +27,7 @@ def index(request):
         context.update({'freq': freq})
         
         BEOL = sub.Substrate(os.path.join(modul_dir, './tech.yml'))
-        CPL = cpl.Coupler(BEOL, _k=float(k))
+        CPL = cpl.Coupler(BEOL)
         CPL.z_c = float(z_c)
         CPL.f_c = float(freq)*1e9
         CPL.design(0)
