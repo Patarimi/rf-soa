@@ -15,19 +15,19 @@ def index(request):
 class ListCompoType(generic.ListView):
     model = Components_Type
     context_object_name = "item_list"
-    template_name = "list.html"
+    template_name = "techno/list.html"
 
 class ListCompo(generic.ListView):
     model = Component
     context_object_name = "item_list"
-    template_name = "list.html"
+    template_name = "techno/list.html"
     
     def get_queryset(self, **kwargs):
         return Component.objects.filter(comp_type_id= self.kwargs['pk'])
 
 class Compo(generic.DetailView):
     model = Component
-    template_name = 'component_detail.html'
+    template_name = 'techno/component_detail.html'
 
 class CompoCreate(generic.CreateView):
     model = Component
@@ -35,7 +35,7 @@ class CompoCreate(generic.CreateView):
              'techno',
              'key_perf',
              ]
-    template_name = "newcompo.html"
+    template_name = "techno/newcompo.html"
     def form_valid(self, form):
         comp_type = Components_Type.objects.get(pk=self.kwargs['type_id'])
         form.instance.comp_type_id = comp_type
@@ -89,4 +89,4 @@ def graph(request):
     else:
         form = GraphFrom(initial={'x_axis':3, 'y_axis':2}, type_id='1')
     context['form'] = form
-    return render(request, "graph.html", context)
+    return render(request, "techno/graph.html", context)
