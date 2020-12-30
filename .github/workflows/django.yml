@@ -31,7 +31,7 @@ jobs:
         DB_PW_TEST: ${{secrets.DB_PW_TEST}}
       run: |
         python manage.py collectstatic --noinput
-        coverage run --source=techno python manage.py test --keepdb
+        coverage run --source=techno manage.py test --keepdb
     - name: Coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
