@@ -13,7 +13,7 @@ class Components_Type(models.Model):
     def __str__(self):
         return self.name
     def get_absolute_url(self):
-        return reverse('list_compo', args=[str(self.id)])
+        return reverse('techno:list_compo', args=[str(self.id)])
 
 class Provider(models.Model):
     name = models.CharField(max_length=200)
@@ -41,7 +41,7 @@ class Component(models.Model):
     def __str__(self):
         return self.doi.split('/')[-1]
     def get_absolute_url(self):
-        return reverse('compo', args=[str(self.id)])
+        return reverse('techno:compo', args=[str(self.id)])
 
 class Key_Perf(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE, default=1)
