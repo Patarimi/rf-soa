@@ -6,7 +6,7 @@ class Key_Param(models.Model):
     name_text = models.CharField(max_length=200)
     units = models.CharField(blank=True, choices= UnitsPool.choices, max_length=10)
     def __str__(self):
-        return self.name_text
+        return f'{self.name_text} ({self.units})'
     
 class Components_Type(models.Model):
     name = models.CharField(max_length=200)
@@ -35,7 +35,7 @@ class Techno(models.Model):
 
 class Component(models.Model):
     doi = models.URLField(max_length=200)
-    comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE)
+    comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE, verbose_name='component type')
     perf_record = models.ManyToManyField(Key_Param, through='Key_Perf')
     techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
     def __str__(self):

@@ -5,10 +5,11 @@ from .views import graph
 from .models import Component, Components_Type, Techno, Technos_Type, Provider
 
 class ViewsTest(TestCase):
-    def test_techno_path(self):
-        techno_path_list = ('graph', 'index', 'explore')
-        for path in techno_path_list:
-            resp = self.client.get(reverse(f'techno:{path}'))
+    def test_static_view(self):
+        static_path_list = ('graph', 'index', 'explore')
+        app_name = 'techno'
+        for path in static_path_list:
+            resp = self.client.get(reverse(f'{app_name}:{path}'))
             self.assertEqual(resp.status_code, 200)       
 
 class ModelTest(TestCase):
