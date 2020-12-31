@@ -1,23 +1,15 @@
-import os
+from pathlib import Path
 from django.shortcuts import render
 import passive_auto_design.components.coupler as cpl
 import passive_auto_design.substrate as sub
 
-modul_dir = os.path.dirname(__file__)
-class MenuItem():
-    def __init__(self, _link, _menu_text):
-        self.link = _link
-        self.menu_text = _menu_text
+modul_dir = Path(__file__).resolve(strict=True).parents[1]
 
-menu_list = {
-    MenuItem("", "Coupler Sizing"),
-    MenuItem("", "Model Extraction"),
-             }
 def index(request):
-    context = {
-        'menu_list': menu_list,
-        'menu_sel': 1,
-        }
+    return render(request, 'rf/index.html')
+
+def coupler_sizing(request):
+    context = {}
     try:
         z_c = request.POST.get('z_c', 50)
         context.update({'z_c': z_c})
@@ -26,7 +18,7 @@ def index(request):
         freq = request.POST.get('frequence', 10)
         context.update({'freq': freq})
         
-        BEOL = sub.Substrate(os.path.join(modul_dir, './tech.yml'))
+        BEOL = sub.Substrate(modul_dir / 'tech.yml')
         CPL = cpl.Coupler(BEOL)
         CPL.z_c = float(z_c)
         CPL.f_c = float(freq)*1e9
@@ -40,4 +32,7 @@ def index(request):
         context.update({'result': result})
     except Exception as e:
         context.update({'result': repr(e)})
-    return render(request, 'rf/index.html', context)
+    return render(request, 'rf/model_extraction.html')
+
+def model_ext(request):
+    return render(request, 'rf/coupler_sizing.html')

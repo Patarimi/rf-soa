@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% block title %}<title>SoA Review</title>{% endblock %}
+  {% block title %}<title>RF Insight</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -16,6 +16,8 @@
            <ul class="sidebar-nav">
                <li><a href="{% url 'index' %}">Home</a></li>
                <li><a href="{% url 'rf:index' %}">RF Design Helper Web</a></li>
+               <ul><li><a href="{% url 'rf:model_ext' %}">Model Extraction</a></li></ul>
+               <ul><li><a href="{% url 'rf:index' %}">Coupler Sizing</a></li></ul>
                <li><a href="{% url 'techno:index' %}">SoA Explorer</a></li>
                <ul><li><a href="{% url 'techno:explore' %}">Explore</a></li></ul>
                <ul><li><a href="{% url 'techno:graph' %}">Graph</a></li></ul>

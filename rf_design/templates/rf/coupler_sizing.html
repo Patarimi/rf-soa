@@ -1,0 +1,36 @@
+{% extends "rf_insight/base_generic.html" %}
+
+{% block content %}
+<div id="content">
+    <h2>Setup</h2>
+    <form method='POST'>
+    {% csrf_token %}
+    <div>Frequency (GHz):</div>
+    <div><input name="frequence", type="number" min=0 step=0.1 value={{freq}}></input></div>
+    <div>Characteristic Impedance (&Omega;):</div>
+    <div><input name="z_c", type="number" min=0 step=0.1 value={{z_c}}></input></div>
+    <div>Coupling factor (SI):</div>
+    <div><input name="k", type="number" min=0 step=0.1 max=1 value={{k}}></input></div>
+    <button>Calculate</button>
+    </form>
+</div>
+<div id="result">
+<h2>Results</h2>
+    <table>
+    {% if result %}
+        <thead>
+            <tr><td>L (nH)</td><td>R (&Omega;)</td><td>Cg (fF)</td><td>Cm (fF)</td></tr>
+        </thead>
+        <tbody>
+            <tr><td>{{result.lp}}</td>
+            <td>{{result.rp}}</td>
+            <td>{{result.cg}}</td>
+            <td>{{result.cm}}</td>
+            </tr>
+    {% else %}
+        ...
+    {% endif %}
+    </table>
+    <button>Export...</button>
+</div>
+{% endblock %}
