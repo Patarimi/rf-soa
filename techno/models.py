@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 class Key_Param(models.Model):
-    UnitsPool = models.TextChoices('UnitsPool', 'Hz W %')
+    UnitsPool = models.TextChoices('UnitsPool', 'Hz W % dB')
     name_text = models.CharField(max_length=200)
     units = models.CharField(blank=True, choices= UnitsPool.choices, max_length=10)
     def __str__(self):
@@ -35,7 +35,7 @@ class Techno(models.Model):
 
 class Component(models.Model):
     doi = models.URLField(max_length=200)
-    comp_type_id = models.ForeignKey(Components_Type, on_delete=models.CASCADE, verbose_name='component type')
+    comp_type = models.ForeignKey(Components_Type, on_delete=models.CASCADE, verbose_name='component type')
     perf_record = models.ManyToManyField(Key_Param, through='Key_Perf')
     techno = models.ForeignKey(Techno, on_delete=models.CASCADE)
     def __str__(self):
