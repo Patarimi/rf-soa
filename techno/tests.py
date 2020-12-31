@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .views import graph
 from .models import Component, Components_Type, Techno, Technos_Type, Provider
 
 class ViewsTest(TestCase):
@@ -10,7 +9,7 @@ class ViewsTest(TestCase):
         app_name = 'techno'
         for path in static_path_list:
             resp = self.client.get(reverse(f'{app_name}:{path}'))
-            self.assertEqual(resp.status_code, 200)       
+            self.assertEqual(resp.status_code, 200)
 
 class ModelTest(TestCase):
     def test_components_type(self):

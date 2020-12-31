@@ -1,9 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .views import index
-
-class TestViews(TestCase):
+class ViewsTest(TestCase):
     def test_static_view(self):
         static_path_list = ('coupler_sizing', 'index', 'model_ext')
         app_name = 'rf'
