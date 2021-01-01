@@ -29,7 +29,7 @@ class ModelTest(TestCase):
         
         compo = Component(doi='https://doi.org/foo',
                           pk=1,
-                          comp_type_id=compo_type,
+                          comp_type=compo_type,
                           techno=tech,
                           )
         compo.save()
