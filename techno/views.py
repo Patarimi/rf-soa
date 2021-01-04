@@ -37,6 +37,11 @@ class ListCompo(generic.ListView):
 class Compo(generic.DetailView):
     model = Component
     template_name = 'techno/component_detail.html'
+    
+    def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['key_perf'] = Key_Perf.objects.filter(component_id=self.kwargs['pk'])
+       return context
 
 class CompoCreate(LoginRequiredMixin, generic.View):
     form_class = ComponentForm

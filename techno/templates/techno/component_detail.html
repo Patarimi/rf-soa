@@ -8,8 +8,8 @@
     <li>Technology Name: {{component.techno}}</li>
     <li>Performances:
     <table>
-    {% for perf in component.perf_record.all %}
-        <tr><td>{{perf.name_text}}</td><td>{{perf.through.value}}{{perf.units}}</td></tr>
+    {% for perf in key_perf.all %}
+        <tr><td>{{perf.key_param}}</td><td>{{perf.value}}{{perf.key_param.unit}}</td></tr>
     {% endfor %}
     </table>
     <li><a href="{{component.doi}}"> publication (external link) </a></li>
