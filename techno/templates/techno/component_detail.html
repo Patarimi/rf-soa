@@ -4,7 +4,7 @@
 <h2> Summary of {{component}} </h2>
 
 <ul>
-    <li>Component Type: <a href='{% url "techno:list_compo" component.comp_type_id.pk %}'>{{component.comp_type_id}}</a></li>
+    <li>Component Type: <a href='{% url "techno:list_compo" component.comp_type.pk %}'>{{component.comp_type}}</a></li>
     <li>Technology Name: {{component.techno}}</li>
     <li>Performances:
     <table>

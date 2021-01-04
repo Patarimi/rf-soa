@@ -24,7 +24,7 @@ class ModelTest(TestCase):
         tech_type.save()
         prov = Provider(name='elec')
         prov.save()
-        tech = Techno(name='28FDSOI', id=1, techno_type=tech_type, provider=prov)
+        tech = Techno(name='28FDSOI', pk=1, techno_type=tech_type, provider=prov)
         tech.save()
         
         compo = Component(doi='https://doi.org/foo',

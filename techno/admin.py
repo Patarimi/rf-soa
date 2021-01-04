@@ -9,8 +9,8 @@ class Key_PerfInline(admin.TabularInline):
 @admin.register(Component)    
 class ComponentAdmin(admin.ModelAdmin):
     inlines = (Key_PerfInline, )
-    list_display = ('doi', 'comp_type_id', 'techno')
-    list_filter = ['comp_type_id', 'techno']
+    list_display = ('doi', 'comp_type', 'techno')
+    list_filter = ['comp_type', 'techno']
 
 @admin.register(Key_Param)
 class Key_ParamAdmin(admin.ModelAdmin):
