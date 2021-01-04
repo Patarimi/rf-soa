@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Component, Components_Type, Techno, Technos_Type, Provider
+from .models import Component, Components_Type, Techno, Technos_Type, Provider, Key_Param
 
 class ViewsTest(TestCase):
     def test_static_view(self):
@@ -10,6 +10,21 @@ class ViewsTest(TestCase):
         for path in static_path_list:
             resp = self.client.get(reverse(f'{app_name}:{path}'))
             self.assertEqual(resp.status_code, 200)
+    def test_graph(self):
+        post_mess = {'comptype':1,
+                     'x_axis':3,
+                     'y_axis':2,  
+                    }
+        key_param3 = Key_Param(name_text='third', pk=3)
+        key_param3.save()
+        key_param2 = Key_Param(name_text='second', pk=2)
+        key_param2.save()
+        compo_type = Components_Type(name='foo', pk=1)
+        compo_type.save()
+        resp = self.client.get(reverse('techno:graph'))
+        resp = self.client.post(reverse('techno:graph'), post_mess)
+        self.assertEqual(resp.status_code, 200)
+        
 
 class ModelTest(TestCase):
     def test_components_type(self):

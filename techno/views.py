@@ -85,7 +85,7 @@ def graph(request):
                 y = data_set.get(component_id=data, key_param_id=y_id).value
                 x_value.append(float(x))
                 y_value.append(float(y))
-            except KeyError:
+            except (KeyError, Key_Perf.DoesNotExist):
                 pass
         plot.circle(x_value, y_value, size=5, color="blue")
         script, div = components(plot)
