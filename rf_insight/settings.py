@@ -151,4 +151,7 @@ STATIC_ROOT = 'staticfiles'
 #logging
 DEBUG_PROPAGATE_EXCEPTIONS=True
 
+#login
+LOGIN_REDIRECT_URL = '/'
+
 django_heroku.settings(locals())

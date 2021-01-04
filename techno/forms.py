@@ -1,7 +1,8 @@
 from django import forms
 from django.db.utils import ProgrammingError
+from django.forms import inlineformset_factory
 
-from .models import Components_Type, Key_Param
+from .models import Components_Type, Key_Param, Component, Key_Perf
 
 class GraphFrom(forms.Form):
     try:
@@ -21,3 +22,10 @@ class GraphFrom(forms.Form):
         choices = Key_Param.objects.all().values_list('pk', 'name_text')
         self.fields['y_axis'] = forms.ChoiceField(choices=choices)
         self.fields['x_axis'] = forms.ChoiceField(choices=choices)
+
+PerfInline = forms.inlineformset_factory(Component, Key_Perf, fields=('key_param', 'value'))
+
+class ComponentForm(forms.ModelForm):
+    class Meta:
+        model = Component
+        exclude = ('perf_record',)

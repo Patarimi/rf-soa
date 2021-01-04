@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from techno.models import Components_Type, Component, Key_Param, Key_Perf
-from .forms import GraphFrom
+from .forms import GraphFrom, ComponentForm, PerfInline
 from bokeh.plotting import figure
 from bokeh.embed import components
 
@@ -36,17 +38,23 @@ class Compo(generic.DetailView):
     model = Component
     template_name = 'techno/component_detail.html'
 
-class CompoCreate(generic.CreateView):
-    model = Component
-    fields = ['doi',
-             'techno',
-             'key_perf',
-             ]
+class CompoCreate(LoginRequiredMixin, generic.View):
+    form_class = ComponentForm
+    inline_formset = PerfInline
     template_name = "techno/newcompo.html"
-    def form_valid(self, form):
-        comp_type = Components_Type.objects.get(pk=self.kwargs['type_id'])
-        form.instance.comp_type_id = comp_type
-        return super().form_valid(form)
+    
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        formset = self.inline_formset(instance=Component())
+        return render(request, self.template_name, {'form':form, 'formset':formset})
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        formset = self.inline_formset(request.POST, instance=Component())
+        if form.is_valid() and formset.is_valid():
+            entity = form.save(commit=True)
+            formset.instance = entity
+            formset.save()
+        return render(request, self.template_name, {'form':form, 'formset':formset})
 
 def axis_type(axis_name, request):
     try:

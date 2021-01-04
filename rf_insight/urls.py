@@ -22,4 +22,6 @@ urlpatterns = [
     path('techno/', include('techno.urls')),
     path('admin/', admin.site.urls),
     path('rf_design/', include('rf_design.urls')),
+    #add django site authentification urls
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
