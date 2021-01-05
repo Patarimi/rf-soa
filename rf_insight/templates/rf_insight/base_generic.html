@@ -4,6 +4,7 @@
   {% block title %}<title>RF Insight</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -22,7 +23,6 @@
                <ul><li><a href="{% url 'techno:explore' %}">Explore</a></li></ul>
                <ul><li><a href="{% url 'techno:graph' %}">Graph</a></li></ul>
                <li><a href="/admin">Admin</a></li>
-               <li><a href="">About</a></li>
                {% if user.is_authenticated %}
                     <li>User: {{user.get_username }}</li>
                     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
