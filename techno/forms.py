@@ -1,6 +1,5 @@
 from django import forms
 from django.db.utils import ProgrammingError
-from django.forms import inlineformset_factory
 
 from .models import Components_Type, Key_Param, Component, Key_Perf
 
