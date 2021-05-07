@@ -83,6 +83,8 @@ WSGI_APPLICATION = 'rf_insight.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# default auto field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
